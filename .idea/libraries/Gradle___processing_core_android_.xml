@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: :processing-core-android:">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/processing-core-android.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../processing-android/core/src" />
+    </SOURCES>
+  </library>
+</component>
