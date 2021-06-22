@@ -1,14 +1,22 @@
 package wallpaper;
 
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
 import processing.core.PApplet;
 import wallpaper.noise.FastNoiseLite;
 import wallpaper.noise.Noise;
 
 public class Sketch extends PApplet {
 
+    int xres =1644*2;
+    int yres = 3842;
+
     public void settings() {
-        fullScreen();
+        //fullScreen();
+        size(xres, yres);
     }
 
     /**/
@@ -51,19 +59,42 @@ public class Sketch extends PApplet {
                 1.0f
         };
         gradient = new Gradient(colors, bounds);
+        rough = -maxRough;
     }
 
     // Likes: 8, 7
-    int reductionFactor = 5;
+    int reductionFactor = 1;
 
     public void draw() {
         loadPixels();
         //dotsPixelation();
-        linePixelation();
-        //pixelation();
+        //linePixelation();
+        pixelation();
         updatePixels();
         z += zIncrement;
-        changeRough();
+        //changeRough();
+        rough += roughIncrement;
+        if (rough >= maxRough) {
+            finish();
+        }
+    }
+
+    ObjectOutputStream out;
+
+    public void start(){
+        try {
+             out = new ObjectOutputStream(
+                    new FileOutputStream("myarray.ser")
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+            exit();
+        }
+
+    }
+
+    public void finish(){
+
     }
 
     public void changeRough() {
@@ -169,6 +200,7 @@ public class Sketch extends PApplet {
                         if (xyc < pixels.length) {
                             float c = map(val, -1, 1, 0, 1);
                             pixels[xyc] = gradient.getColor(c);
+
                         }
                     }
                 }
